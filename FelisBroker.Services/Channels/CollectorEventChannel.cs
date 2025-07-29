@@ -2,9 +2,9 @@
 using FelisBroker.Interfaces.Channels;
 using FelisBroker.Interfaces.Entities;
 
-namespace FelisBroker.Collector.Channels;
+namespace FelisBroker.Services.Channels;
 
-public class SourceEventChannel : ISourceEventChannel
+public class CollectorEventChannel : ICollectorEventChannel
 {
     private readonly Channel<SourceProcessingEntity> _channel = Channel.CreateUnbounded<SourceProcessingEntity>();
 

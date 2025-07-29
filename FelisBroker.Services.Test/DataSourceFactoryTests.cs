@@ -1,7 +1,7 @@
-﻿using FelisBroker.Collector.Channels;
-using FelisBroker.Common.Configurations;
+﻿using FelisBroker.Common.Configurations;
 using FelisBroker.DataSource.Mqtt;
 using FelisBroker.DataSource.RedisPubSub;
+using FelisBroker.Services.Channels;
 using FelisBroker.Services.Factories;
 
 namespace FelisBroker.Services.Test;
@@ -21,7 +21,7 @@ public class DataSourceFactoryTests
             ClientId = "client-1"
         };
 
-        var channel = new SourceEventChannel();
+        var channel = new CollectorEventChannel();
 
         // Act
         var dataSource = DataSourceFactory.Create(config, channel);
@@ -40,7 +40,7 @@ public class DataSourceFactoryTests
             ChannelName = "events:*"
         };
 
-        var channel = new SourceEventChannel();
+        var channel = new CollectorEventChannel();
 
         // Act
         var dataSource = DataSourceFactory.Create(config, channel);

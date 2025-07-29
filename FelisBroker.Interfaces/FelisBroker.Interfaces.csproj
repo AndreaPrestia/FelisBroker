@@ -10,4 +10,8 @@
       <ProjectReference Include="..\FelisBroker.Common\FelisBroker.Common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Certificate" Version="9.0.7" />
+    </ItemGroup>
+
 </Project>

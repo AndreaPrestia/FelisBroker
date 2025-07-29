@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\FelisBroker.Collector\FelisBroker.Collector.csproj" />
       <ProjectReference Include="..\FelisBroker.Common\FelisBroker.Common.csproj" />
       <ProjectReference Include="..\FelisBroker.Services\FelisBroker.Services.csproj" />
     </ItemGroup>

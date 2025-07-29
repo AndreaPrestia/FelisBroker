@@ -1,4 +1,5 @@
 ﻿using FelisBroker.Common.Configurations;
+using FelisBroker.Common.Extensions;
 using FelisBroker.Interfaces.Channels;
 using FelisBroker.Interfaces.Entities;
 using FelisBroker.Interfaces.Sources;
@@ -9,24 +10,15 @@ namespace FelisBroker.DataSource.RedisPubSub;
 public class RedisPubSubDataSource : IDataSource
 {
     private readonly RedisPubSubConfiguration _originConfiguration;
-    private readonly ISubscriber _subscriber;
-    private readonly ISourceEventChannel _sourceEventChannel;
+    private ISubscriber? _subscriber;
+    private readonly ICollectorEventChannel _collectorEventChannel;
     private bool _subscribed;
     private readonly Lock _lock = new();
 
-    public RedisPubSubDataSource(RedisPubSubConfiguration originConfiguration, ISourceEventChannel sourceEventChannel)
+    public RedisPubSubDataSource(RedisPubSubConfiguration originConfiguration, ICollectorEventChannel collectorEventChannel)
     {
-        var validation = originConfiguration.Validate();
-
-        if (!validation.Success)
-        {
-            throw new ApplicationException(validation.ToString());
-        }
-        
         _originConfiguration = originConfiguration;
-        _sourceEventChannel = sourceEventChannel;
-        var connection = ConnectionMultiplexer.Connect(_originConfiguration.ConnectionString!);
-        _subscriber = connection.GetSubscriber();
+        _collectorEventChannel = collectorEventChannel;
     }
 
     public Task StartAsync()
@@ -39,7 +31,7 @@ public class RedisPubSubDataSource : IDataSource
     {
         lock (_lock)
         {
-            _subscriber.UnsubscribeAll();
+            _subscriber?.UnsubscribeAll();
             _subscribed = false;
         }
         
@@ -58,17 +50,26 @@ public class RedisPubSubDataSource : IDataSource
 
     private void Subscribe()
     {
+        if (_subscriber == null || !_subscriber.IsConnected())
+        {
+            var connection = ConnectionMultiplexer.Connect(_originConfiguration.ConnectionString!);
+            _subscriber = connection.GetSubscriber();
+        }
+        
         _subscriber.Subscribe(
             new RedisChannel(_originConfiguration.ChannelName!, RedisChannel.PatternMode.Auto),
             (_, message) =>
             {
                 var entity = new SourceProcessingEntity
                 {
+                    CorrelationId = Guid.NewGuid(),
                     Destination = _originConfiguration.Destination!,
-                    Payload = message.ToString()
+                    Payload = message.ToString(),
+                    Origin = _originConfiguration,
+                    Timestamp = DateTime.UtcNow.ToUnixTimestamp()
                 };
 
-                _sourceEventChannel.PublishAsync(entity);
+                _collectorEventChannel.PublishAsync(entity);
             });
     }
 }

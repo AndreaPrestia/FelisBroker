@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FelisBroker.Common\FelisBroker.Common.csproj" />
       <ProjectReference Include="..\FelisBroker.Interfaces\FelisBroker.Interfaces.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
     </ItemGroup>
 
 </Project>

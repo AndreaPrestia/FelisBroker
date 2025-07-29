@@ -1,10 +1,11 @@
-﻿using FelisBroker.Interfaces.Entities;
+﻿using System.Runtime.CompilerServices;
+using FelisBroker.Interfaces.Entities;
 
 namespace FelisBroker.Interfaces.Services;
 
 public interface IStorage
 {
-    Task<IList<int>> GetOffsetsAsync(string topic);
-    Task<bool> WriteMessageAsync(MessageEntity message);
-    Task<IList<MessageEntity>> ReadMessagesAsync(string topic, int offset);
+    Task<IEnumerable<long>> GetOffsetsAsync(string destination);
+    Task<MessageEntity?> WriteMessageAsync(SourceProcessingEntity entity, CancellationToken cancellationToken);
+    Task<IEnumerable<MessageEntity>> ReadMessagesAsync(string destination, int start, int end, CancellationToken cancellationToken);
 }

@@ -2,7 +2,7 @@
 
 namespace FelisBroker.Interfaces.Channels;
 
-public interface ISourceEventChannel
+public interface ICollectorEventChannel
 {
     Task PublishAsync(SourceProcessingEntity entity);
 

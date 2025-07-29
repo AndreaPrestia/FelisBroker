@@ -3,22 +3,10 @@ using FelisBroker.Common.Helpers;
 
 namespace FelisBroker.Common.Configurations;
 
-public class MqttConfiguration : OriginConfiguration
+public class HttpConfiguration : OriginConfiguration
 {
-    [Required(AllowEmptyStrings = false)]
-    public string? Topic { get; init; }
-    [Required(AllowEmptyStrings = false)]
-    public string? Host { get; init; }
-    [Range(1, 65535)]
-    public int Port { get; init; }
-    [Required(AllowEmptyStrings = false)]
-    public string? ClientId { get; init; }
-    [Required(AllowEmptyStrings = false)]
-    public string? Username { get; init; }
-    public string? Password { get; init; }
-    [Range(0, 2)]
-    public int QoS { get; init; }
-    
+    public HttpAuthConfiguration? AuthConfiguration { get; set; }
+
     public override ValidationResponse Validate()
     {
         var results = new List<ValidationResult>();

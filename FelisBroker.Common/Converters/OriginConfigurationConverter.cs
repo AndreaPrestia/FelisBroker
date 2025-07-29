@@ -18,6 +18,7 @@ public class OriginConfigurationConverter : JsonConverter<OriginConfiguration>
 
         return originType switch
         {
+            OriginType.Http => JsonSerializer.Deserialize<HttpConfiguration>(root.GetRawText(), options),
             OriginType.RabbitMq => JsonSerializer.Deserialize<RabbitMqConfiguration>(root.GetRawText(), options),
             OriginType.Mqtt => JsonSerializer.Deserialize<MqttConfiguration>(root.GetRawText(), options),
             OriginType.RedisPubSub => JsonSerializer.Deserialize<RedisPubSubConfiguration>(root.GetRawText(), options),

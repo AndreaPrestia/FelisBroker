@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using FelisBroker.Common.Configurations;
+using FelisBroker.Common.Extensions;
 using FelisBroker.Interfaces.Channels;
 using FelisBroker.Interfaces.Entities;
 using FelisBroker.Interfaces.Sources;
@@ -15,19 +16,12 @@ public class MqttDataSource : IDataSource
     private readonly IMqttClient _mqttClient;
     private bool _connected;
     private readonly Lock _lock = new();
-    private readonly ISourceEventChannel _sourceEventChannel;
+    private readonly ICollectorEventChannel _collectorEventChannel;
 
-    public MqttDataSource(MqttConfiguration originConfiguration, ISourceEventChannel sourceEventChannel)
+    public MqttDataSource(MqttConfiguration originConfiguration, ICollectorEventChannel collectorEventChannel)
     {
-        var validation = originConfiguration.Validate();
-
-        if (!validation.Success)
-        {
-            throw new ApplicationException(validation.ToString());
-        }
-        
         _originConfiguration = originConfiguration;
-        _sourceEventChannel = sourceEventChannel;
+        _collectorEventChannel = collectorEventChannel;
         var factory = new MqttClientFactory();
         _mqttClient = factory.CreateMqttClient();
     }
@@ -92,12 +86,14 @@ public class MqttDataSource : IDataSource
 
         var entity = new SourceProcessingEntity
         {
+            CorrelationId = Guid.NewGuid(),
             Destination = _originConfiguration.Destination!,
             Payload = payload,
-            Origin = _originConfiguration
+            Origin = _originConfiguration,
+            Timestamp = DateTime.UtcNow.ToUnixTimestamp()
         };
 
-        await _sourceEventChannel.PublishAsync(entity);
+        await _collectorEventChannel.PublishAsync(entity);
     }
 
     private Task OnDisconnectedAsync(MqttClientDisconnectedEventArgs args)

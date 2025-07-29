@@ -29,7 +29,7 @@ public class RabbitMqConfiguration : OriginConfiguration
         var results = new List<ValidationResult>();
         var context = new ValidationContext(this);
 
-        bool isValid = Validator.TryValidateObject(this, context, results, validateAllProperties: true);
+        var isValid = Validator.TryValidateObject(this, context, results, validateAllProperties: true);
 
         return isValid
             ? ValidationResponse.Ok()

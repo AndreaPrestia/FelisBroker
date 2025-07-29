@@ -12,17 +12,10 @@ public class RabbitMqDataSource : IDataSource
     //private IModel _channelModel;
     private bool _subscribed = false;
     private readonly Lock _lock = new();
-    private readonly ISourceEventChannel _eventChannel;
+    private readonly ICollectorEventChannel _eventChannel;
 
-    public RabbitMqDataSource(RabbitMqConfiguration originConfiguration, ISourceEventChannel eventChannel)
+    public RabbitMqDataSource(RabbitMqConfiguration originConfiguration, ICollectorEventChannel eventChannel)
     {
-        var validation = originConfiguration.Validate();
-
-        if (!validation.Success)
-        {
-            throw new ApplicationException(validation.ToString());
-        }
-        
         _rabbitMqConfiguration = originConfiguration;
         _eventChannel = eventChannel;
 
