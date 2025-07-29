@@ -1,0 +1,19 @@
+﻿{
+  "Origins": [
+    {
+      "Name": "mqtt-temp",
+      "OriginType": "Mqtt",
+      "Topic": "sensors/temp",
+      "Host": "broker.hivemq.com",
+      "Port": 1883,
+      "ClientId": "mqtt-client-1"
+    },
+    {
+      "Name": "redis-events",
+      "OriginType": "RedisPubSub",
+      "Topic": "events:*",
+      "Host": "localhost",
+      "Port": 6379
+    }
+  ]
+}

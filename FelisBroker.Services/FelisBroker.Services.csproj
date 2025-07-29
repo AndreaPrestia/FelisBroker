@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FelisBroker.Collector\FelisBroker.Collector.csproj" />
+      <ProjectReference Include="..\FelisBroker.DataSource.Mqtt\FelisBroker.DataSource.Mqtt.csproj" />
+      <ProjectReference Include="..\FelisBroker.DataSource.RabbitMq\FelisBroker.DataSource.RabbitMq.csproj" />
+      <ProjectReference Include="..\FelisBroker.DataSource.RedisPubSub\FelisBroker.DataSource.RedisPubSub.csproj" />
+      <ProjectReference Include="..\FelisBroker.Interfaces\FelisBroker.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>
