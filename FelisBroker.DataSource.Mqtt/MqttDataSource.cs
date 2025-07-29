@@ -87,7 +87,7 @@ public class MqttDataSource : IDataSource
         var entity = new SourceProcessingEntity
         {
             CorrelationId = Guid.NewGuid(),
-            Destination = _originConfiguration.Destination!,
+            Key = _originConfiguration.Destination!,
             Payload = payload,
             Origin = _originConfiguration,
             Timestamp = DateTime.UtcNow.ToUnixTimestamp()

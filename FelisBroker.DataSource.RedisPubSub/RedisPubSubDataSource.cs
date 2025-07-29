@@ -63,7 +63,7 @@ public class RedisPubSubDataSource : IDataSource
                 var entity = new SourceProcessingEntity
                 {
                     CorrelationId = Guid.NewGuid(),
-                    Destination = _originConfiguration.Destination!,
+                    Key = _originConfiguration.Destination!,
                     Payload = message.ToString(),
                     Origin = _originConfiguration,
                     Timestamp = DateTime.UtcNow.ToUnixTimestamp()

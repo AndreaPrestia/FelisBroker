@@ -47,8 +47,9 @@ public static class ServiceCollectionExtensions
             });
         }
 
-        services.AddSingleton<IStorage, StorageService>(serviceProvider =>
-            new StorageService(dataPath, serviceProvider.GetRequiredService<ILogger<StorageService>>()));
+        services.AddSingleton<IEventStore, EventStore>( serviceProvider =>
+            new EventStore(dataPath, serviceProvider.GetRequiredService<ILoggerFactory>()));
+
         services.AddHostedService<DataSourceService>();
     }
 

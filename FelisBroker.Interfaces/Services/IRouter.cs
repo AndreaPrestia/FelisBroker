@@ -4,6 +4,6 @@ namespace FelisBroker.Interfaces.Services;
 
 public interface IRouter
 {
-    Task<IList<int>> GetOffsetsAsync(string destination);
-    Task<IList<MessageEntity>> ReadMessagesAsync(string destination, int start, int end);
+    Task<IEnumerable<long>> GetOffsetsAsync(string key, CancellationToken cancellationToken);
+    Task<IEnumerable<MessageEntity>> ReadMessagesAsync(string key, long start, long end, CancellationToken cancellationToken);
 }

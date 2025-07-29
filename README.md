@@ -31,7 +31,7 @@
   `Value: JSON payload`
 
 - Partitioned ZoneTrees per topic:  
-  `/data/topics/sensor.temp.zone/`
+  `/data/keys/sensor.temp.zone/`
 
 - Offsets per topic tracked in:  
   `/data/offsets.db`

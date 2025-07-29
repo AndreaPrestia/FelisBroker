@@ -44,7 +44,7 @@ public class HttpDataSource : IDataSource, IHttpEndpointSource
         var entity = new SourceProcessingEntity
         {
             CorrelationId = Guid.NewGuid(),
-            Destination = _config.Destination!,
+            Key = _config.Destination!,
             Payload = body,
             Origin = _config,
             Timestamp = DateTime.UtcNow.ToUnixTimestamp()
