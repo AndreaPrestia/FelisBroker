@@ -20,6 +20,7 @@
 
 ## 🧱 Architecture
 
+![alt text](FelisBroker.png)
 
 ---
 

@@ -52,7 +52,7 @@ public static class ServiceCollectionExtensions
         services.AddHostedService<DataSourceService>();
     }
 
-    public static void MapFelisBrokerEndpoint(this IApplicationBuilder app)
+    public static void MapFelisBrokerEndpoints(this IApplicationBuilder app)
     {
         app.UseMiddleware<ErrorMiddleware>();
 
